@@ -1,0 +1,16 @@
+{{define "title"}}Carl Zhang Photos{{end}}
+
+{{define "content"}}
+<div class="link-container">
+    <a href="/">Home</a>
+    <a href="/photos">Photos</a>
+</div>
+<h1>CARL ZHANG</h1>
+<div class="photos-container">
+    {{range .}}
+    <a href="/photos/{{.ID}}">
+        <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/preview" height="200" alt="{{.Title}}" />
+    </a>
+    {{end}}
+</div>
+{{end}}

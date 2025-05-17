@@ -1,0 +1,24 @@
+{{define "title"}}Carl Zhang Photos{{end}}
+
+{{define "content"}}
+<div class="link-container">
+    <a href="/">Home</a>
+    <a href="/photos">Photos</a>
+</div>
+<h1>CARL ZHANG</h1>
+<p>I use a Canon EOS R50 usually with an RF50mm F1.8 STM and edit in darktable and GIMP.</p>
+
+<h2>Collections</h2>
+<div class="collection-container">
+    {{range .}}
+    <a href="/photos/collection/{{.Collection.ID}}">
+        <div class="collection">
+            <h3>{{.Collection.Title}}</h3>
+            {{range .Photos}}
+            <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/preview" height="200" alt="{{.Title}}" />
+            {{end}}
+        </div>
+    </a>
+    {{end}}
+</div>
+{{end}}

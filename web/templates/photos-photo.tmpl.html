@@ -1,0 +1,10 @@
+{{define "title"}}{{.Photo.Title}}{{end}}
+
+{{define "content"}}
+<div class="link-container">
+    <a href="/">Home</a>
+    <a href="/photos">Photos</a>
+</div>
+<h1>{{.Photo.Title}}</h1>
+<img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.Photo.ID}}/public" width="1024" alt="{{.Photo.Title}}" />
+{{end}}
