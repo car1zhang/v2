@@ -2,23 +2,28 @@
 
 {{define "content"}}
 <div class="row">
-    <a href="/">Home</a>
-    <a href="/photos">Photos</a>
+    <a href="/">car1zhang.com</a>
+    <a href="/photos">photos</a>
 </div>
-<h1>CARL ZHANG</h1>
-<p>I use a Canon EOS R50 usually with an RF50mm F1.8 STM and edit in darktable and GIMP.</p>
+<h1>Photos by Carl.</h1>
+<p>I use a Canon EOS R50 usually with an RF50mm F1.8 STM lens and edit in darktable and GIMP.</p>
 
-<h2>Collections</h2>
-<div class="collection-container">
-    {{range .}}
-    <a href="/photos/collection/{{.Collection.ID}}">
-        <div class="collection">
-            <h3>{{.Collection.Title}}</h3>
-            {{range .Photos}}
-            <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/preview" height="200" alt="{{.Title}}" />
-            {{end}}
-        </div>
-    </a>
-    {{end}}
+{{range .}}
+<div class="collection">
+    <h2>
+        <a href="/photos/collection/{{.Collection.ID}}">
+            {{.Collection.Title}}
+        </a>
+    </h2>
+    <div class="photo-container">
+        {{range .Photos}}
+        <a href="/photos/photo/{{.ID}}">
+            <div class="photo-box small">
+                <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/thumbnail" alt="{{.Title}}" draggable="false" />
+            </div>
+        </a>
+        {{end}}
+    </div>
 </div>
+{{end}}
 {{end}}

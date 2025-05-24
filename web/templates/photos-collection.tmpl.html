@@ -2,14 +2,17 @@
 
 {{define "content"}}
 <div class="row">
-    <a href="/">Home</a>
-    <a href="/photos">Photos</a>
+    <a href="/">car1zhang.com</a>
+    <a href="/photos">photos</a>
 </div>
 <h1>{{.Collection.Title}}</h1>
-{{range .Photos}}
-<a href="/photos/photo/{{.ID}}">
-    <h3>{{.Title}}</h3>
-    <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/preview" width="300" alt="{{.Title}}" />
-</a>
-{{end}}
+<div class="photo-container">
+    {{range .Photos}}
+    <a href="/photos/photo/{{.ID}}">
+        <div class="photo-box large">
+            <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/preview" alt="{{.Title}}" draggable="false" />
+        </div>
+    </a>
+    {{end}}
+</div>
 {{end}}
