@@ -47,6 +47,7 @@ p {
     justify-content: center;
     background-color: #eee;
     border-radius: 0.5rem;
+    transition: all 0.2s;
 }
 .photo-box.small {
     width: 8rem;
@@ -62,6 +63,9 @@ p {
     width: 64rem;
     height: 64rem;
     padding: 2rem;
+}
+a .photo-box:hover {
+    background-color: #ddd;
 }
 
 .photo-box img {
@@ -79,5 +83,8 @@ p {
     }
     .photo-box {
         background-color: #111;
+    }
+    a .photo-box:hover {
+        background-color: #222;
     }
 }
