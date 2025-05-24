@@ -1,0 +1,80 @@
+{{define "title"}}{{.Photo.Title}}{{end}}
+
+{{define "content"}}
+<h1 id="photoTitle">{{.Photo.Title}}</h1>
+<div class="row">
+    {{range .Collections}}
+    <a href="/admin/collections/{{.ID}}">
+        <h3>
+            {{.Title}}
+        </h3>
+    </a>
+    {{end}}
+</div>
+<form id="photoForm">
+    <input id="titleInput" placeholder="Title" value="{{.Photo.Title}}" required>
+    <p>{{.Photo.Timestamp}}</p>
+    <button id="submitButton" type="submit">POST</button>
+    <p id="error">whoops...</p>
+</form>
+<img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.Photo.ID}}/public" width="1024" alt="{{.Photo.Title}}" />
+<button id="deleteButton">DELETE</button>
+
+<script>
+const titleInput = document.getElementById("titleInput");
+const photoTitle = document.getElementById("photoTitle");
+
+let isLoading = false;
+
+document.getElementById("photoForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = titleInput.value;
+
+    if (!title || isLoading) return;
+    isLoading = true;
+
+    const formData = new FormData();
+    formData.append("title", title);
+
+    try {
+        const response = await fetch("{{.APIBaseURL}}/photos/{{.Photo.ID}}", {
+            method: "PATCH",
+            body: formData,
+        })
+
+        if (response.ok) {
+            const data = await response.json();
+            photoTitle.innerHTML = title;
+            isLoading = false;
+        } else {
+            errorElement.style.display = "block";
+            isLoading = false;
+        }
+    } catch (error) {
+        errorElement.style.display = "block";
+        isLoading = false;
+    }
+})
+
+document.getElementById("deleteButton").addEventListener("click", async (e) => {
+    if (isLoading || !confirm("are you sure?")) return;
+    isLoading = true;
+    
+    try {
+        const response = await fetch("{{.APIBaseURL}}/photos/{{.Photo.ID}}", {method: "DELETE"});
+
+        if (response.ok) {
+            isLoading = false;
+            window.location.href = "/admin/photos";
+        } else {
+            errorElement.style.display = "block";
+            isLoading = false;
+        }
+    } catch (error) {
+        errorElement.style.display = "block";
+        isLoading = false;
+    }
+})
+</script>
+{{end}}

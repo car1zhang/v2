@@ -1,0 +1,107 @@
+{{define "title"}}{{.Collection.Title}}{{end}}
+
+{{define "content"}}
+<h1 id="collectionTitle">{{.Collection.Title}}</h1>
+<form id="collectionForm">
+    <input id="titleInput" placeholder="Title" value="{{.Collection.Title}}" required>
+    <input id="precedenceInput" placeholder="Precedence" value="{{.Collection.Precedence}}" required>
+    {{range $i, $e := .Photos}}
+    <div>
+        <h3>{{.Title}}</h3>
+        <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/thumbnail" width="100" alt="{{.Title}}" />
+        <input id="{{.ID}}PrecedenceInput" placeholder="Precedence" value="{{$i}}" >
+    </div>
+    {{end}}
+    {{range .NonPhotos}}
+    <div>
+        <h3>{{.Title}}</h3>
+        <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/thumbnail" width="100" alt="{{.Title}}" />
+        <input id="{{.ID}}PrecedenceInput" placeholder="Precedence" >
+    </div>
+    {{end}}
+    <button id="submitButton" type="submit">POST</button>
+    <p id="error">whoops...</p>
+</form>
+<button id="deleteButton">DELETE</button>
+
+<script>
+const collectionTitle = document.getElementById("collectionTitle");
+const titleInput = document.getElementById("titleInput");
+const precedenceInput = document.getElementById("precedenceInput");
+const errorElement = document.getElementById("error");
+
+let isLoading = false;
+
+document.getElementById("collectionForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = titleInput.value;
+    const precedence = parseInt(precedenceInput.value);
+
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+        let finalPhotos = [];
+        let allPhotos = ({{.NonPhotos}} || []).concat({{.Photos}});
+        for (const photo of allPhotos) {
+            console.log(photo);
+            const precedence = parseInt(document.getElementById(`${photo.id}PrecedenceInput`).value);
+            if (!Number.isNaN(precedence)) {
+                finalPhotos.push({
+                    precedence,
+                    id: photo.id,
+                })
+            }
+        }
+        finalPhotos.sort((a, b) => {
+            return a.precedence - b.precedence;
+        });
+        
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("precedence", precedence);
+        for (const photo of finalPhotos) {
+            formData.append("photos[]", photo.id);
+        }
+        
+        const response = await fetch("{{.APIBaseURL}}/collections/{{.Collection.ID}}", {
+            method: "PATCH",
+            body: formData,
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            collectionTitle.innerHTML = title;
+            isLoading = false;
+        } else {
+            errorElement.style.display = "block";
+            isLoading = false;
+        }
+    } catch {
+        errorElement.style.display = "block";
+        isLoading = false;
+    }
+});
+
+document.getElementById("deleteButton").addEventListener("click", async (e) => {
+    if (isLoading || !confirm("are you sure?")) return;
+    isLoading = true;
+
+    try {
+        const response = await fetch("{{.APIBaseURL}}/collections/{{.Collection.ID}}", {method: "DELETE"});
+
+        if (response.ok) {
+            isLoading = false;
+            window.location.href = "/admin/collections";
+        } else {
+            errorElement.style.display = "block";
+            isLoading = false;
+        }
+    } catch (error) {
+        errorElement.style.display = "block";
+        isLoading = false;
+    }
+});
+</script>
+{{end}}

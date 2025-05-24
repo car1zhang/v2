@@ -1,0 +1,82 @@
+{{define "title"}}New Photo{{end}}
+
+{{define "content"}}
+<form id="photoForm">
+    <h3>New Photo</h3>
+    <input id="titleInput" placeholder="Title" required>
+    <div id="dropZone">
+        <input type="file" id="fileInput" accept="image/*">
+        <img id="previewImage" alt="preview" height="200px">
+    </div>
+    <button id="submitButton" type="submit">POST</button>
+    <p id="error">whoops...</p>
+</form>
+
+<script>
+const titleInput = document.getElementById("titleInput");
+const fileInput = document.getElementById("fileInput");
+const dropZone = document.getElementById("dropZone");
+const previewImage = document.getElementById("previewImage");
+const errorElement = document.getElementById("error");
+
+let isLoading = false;
+let selectedFile = null;
+
+fileInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    handleFile(file);
+});
+dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+});
+dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    handleFile(file);
+});
+function handleFile(file) {
+    if (!file || !file.type.startsWith("image/")) return;
+
+    selectedFile = file;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        previewImage.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+document.getElementById("photoForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = titleInput.value;
+
+    if (!selectedFile || !title || isLoading) return;
+    isLoading = true;
+
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    formData.append("title", title);
+
+    try {
+        const response = await fetch("{{.APIBaseURL}}/photos", {
+            method: "POST",
+            credentials: "same-origin",
+            body: formData,
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            isLoading = false;
+            window.location.href = "/admin/photos";
+        } else {
+            errorElement.style.display = "block";
+            isLoading = false;
+        }
+    } catch (error) {
+        errorElement.style.display = "block";
+        isLoading = false;
+    }
+})
+</script>
+{{end}}

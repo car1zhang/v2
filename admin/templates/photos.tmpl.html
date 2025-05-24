@@ -1,0 +1,17 @@
+{{define "title"}}Photos{{end}}
+
+{{define "content"}}
+<h1>Photos</h1>
+<div class="row">
+    <a href="/admin/photos/new">
+        <button>+</button>
+    </a>
+    <input x-model="search" placeholder="Search"/>
+</div>
+{{range .}}
+<a href="/admin/photos/{{.ID}}">
+    <h3>{{.Title}}</h3>
+    <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/preview" height="200" alt="{{.Title}}" />
+</a>
+{{end}}
+{{end}}

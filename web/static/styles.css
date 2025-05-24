@@ -1,12 +1,11 @@
 body {
-    font-family: Inter;
+    font-family: "IBM Plex Serif", serif;
     background-color: #000;
     color: #fff;
     padding: 2rem;
 }
 
-.link-container {
+.row {
     display: flex;
     gap: 1rem;
 }
-

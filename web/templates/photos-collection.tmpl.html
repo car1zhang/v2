@@ -1,13 +1,13 @@
 {{define "title"}}{{.Collection.Title}}{{end}}
 
 {{define "content"}}
-<div class="link-container">
+<div class="row">
     <a href="/">Home</a>
     <a href="/photos">Photos</a>
 </div>
 <h1>{{.Collection.Title}}</h1>
 {{range .Photos}}
-<a href="/photos/{{.ID}}">
+<a href="/photos/photo/{{.ID}}">
     <h3>{{.Title}}</h3>
     <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/preview" width="300" alt="{{.Title}}" />
 </a>

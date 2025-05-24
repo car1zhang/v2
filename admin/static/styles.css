@@ -1,0 +1,19 @@
+body {
+    font-family: "IBM Plex Serif", serif;
+    padding: 2rem;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+}
+
+#error {
+    display: none;
+}
+
+#dropZone {
+    background-color: #fff;
+    height: 300px;
+    width: 300px;
+}
