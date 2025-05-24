@@ -7,15 +7,15 @@
 </div>
 <h1>{{.Photo.Title}}</h1>
 <div class="photo-box full">
-    <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.Photo.ID}}/public" alt="{{.Photo.Title}}" />
+    <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.Photo.ID}}/public" alt="{{.Photo.Title}}" draggable="false" />
 </div>
 <div class="row">
     {{range .Collections}}
-    <a href="/photos/collection/{{.ID}}">
-        <h3>
+    <h2>
+        <a href="/photos/collection/{{.ID}}">
             {{.Title}}
-        </h3>
-    </a>
+        </a>
+    </h2>
     {{end}}
 </div>
 {{end}}
