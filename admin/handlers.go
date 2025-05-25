@@ -15,7 +15,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		APIBaseURL  string
 	}{
-		APIBaseURL:  os.Getenv("API_BASE_URL"),
+		APIBaseURL:  os.Getenv("API_RELATIVE_BASE_URL"),
 	}
 
 	tmpl.Execute(w, data)
@@ -43,7 +43,7 @@ func newPhotoPageHandler(w http.ResponseWriter, r *http.Request) {
     data := struct {
         APIBaseURL string
     }{
-        APIBaseURL: os.Getenv("API_BASE_URL"),
+        APIBaseURL: os.Getenv("API_RELATIVE_BASE_URL"),
     }
 
     tmpl.Execute(w, data)
@@ -62,7 +62,7 @@ func newCollectionPageHandler(w http.ResponseWriter, r *http.Request) {
         APIBaseURL string
         Photos []Photo
     }{
-        APIBaseURL: os.Getenv("API_BASE_URL"),
+        APIBaseURL: os.Getenv("API_RELATIVE_BASE_URL"),
         Photos: photos,
     }
 
@@ -87,7 +87,7 @@ func editPhotoPageHandler(w http.ResponseWriter, r *http.Request) {
     }{
             Photo: data.Photo,
             Collections: data.Collections,
-            APIBaseURL: os.Getenv("API_BASE_URL"),
+            APIBaseURL: os.Getenv("API_RELATIVE_BASE_URL"),
         })
     if err != nil {
         http.Error(w, "Failed to fill template: "+err.Error(), http.StatusInternalServerError)
@@ -137,7 +137,7 @@ func editCollectionPageHandler(w http.ResponseWriter, r *http.Request) {
             Collection: collectionData.Collection,
             Photos: collectionData.Photos,
             NonPhotos: nonPhotos,
-            APIBaseURL: os.Getenv("API_BASE_URL"),
+            APIBaseURL: os.Getenv("API_RELATIVE_BASE_URL"),
         })
     if err != nil {
         http.Error(w, "Failed to fill template: "+err.Error(), http.StatusInternalServerError)
