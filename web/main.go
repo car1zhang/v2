@@ -32,9 +32,10 @@ func main() {
 	r.Get("/", homePageHandler)
 
 	r.Route("/photos", func(r chi.Router) {
-		r.Get("/", photoHomePageHandler) // maybe move to subdomain instead of routes (when blog/emulator is done too)
+		r.Get("/", photoHomePageHandler)
 		r.Get("/collection/{collectionId}", photoCollectionPageHandler)
-		r.Get("/photo/{photoId}", photoPhotoPageHandler) // error template page instead of sending errors directly back to browser
+		r.Get("/collection/{collectionId}/{photoId}", photoCollectionPhotoPageHandler)
+		r.Get("/photo/{photoId}", photoPhotoPageHandler) // error template page instead of sending errors directly back to browser?
 	})
 
 	log.Printf("Listening on port %s", os.Getenv("PORT"))

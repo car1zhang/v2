@@ -1,0 +1,65 @@
+{{define "title"}}{{.Photo.Title}}{{end}}
+
+{{define "content"}}
+<div class="row">
+    <a href="/">car1zhang.com</a>
+    <a href="/photos">photos</a>
+</div>
+
+<h1>{{.Photo.Title}}</h1>
+<h3>
+    <a href="/photos/collection/{{.Collection.ID}}">
+        {{.Collection.Title}}
+    </a>
+</h3>
+
+<div class="row">
+    <div class="photo-box full">
+        <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.Photo.ID}}/public" alt="{{.Photo.Title}}" draggable="false" />
+    </div>
+
+    <div class="collection">
+        <div class="photo-grid-7">
+            {{range $i, $p := .OtherPhotos}}
+            {{if eq $p.ID $.Photo.ID}}
+            <div class="photo-box disabled small">
+                <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{$p.ID}}/thumbnail" alt="{{$p.Title}}" draggable="false" />
+            </div>
+            {{else}}
+            <a href="/photos/collection/{{$.Collection.ID}}/{{$p.ID}}">
+                <div class="photo-box small">
+                    <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{$p.ID}}/thumbnail" alt="{{$p.Title}}" draggable="false" />
+                </div>
+            </a>
+            {{end}}
+            {{end}}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {{range .OtherCollections}}
+    {{if ne .ID $.Collection.ID}}
+    <h3>
+        <a href="/photos/collection/{{.ID}}/{{$.Photo.ID}}">
+            {{.Title}}
+        </a>
+    </h3>
+    {{end}}
+    {{end}}
+</div>
+
+<script>
+window.addEventListener("keyup", (e) => {
+    if (e.key == "ArrowLeft" && {{.PrevID}}) {
+        window.location.href = "/photos/collection/{{.Collection.ID}}/{{.PrevID}}";
+    }
+    if (e.key == "ArrowRight" && {{.NextID}}) {
+        window.location.href = "/photos/collection/{{.Collection.ID}}/{{.NextID}}";
+    }
+    if (e.key == "Escape") {
+        window.location.href = "/photos/collection/{{.Collection.ID}}";
+    }
+});
+</script>
+{{end}}

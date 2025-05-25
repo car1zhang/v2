@@ -8,11 +8,25 @@
 <h1>{{.Collection.Title}}</h1>
 <div class="photo-container">
     {{range .Photos}}
-    <a href="/photos/photo/{{.ID}}">
+    <a href="/photos/collection/{{$.Collection.ID}}/{{.ID}}">
         <div class="photo-box large">
             <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/preview" alt="{{.Title}}" draggable="false" />
         </div>
     </a>
     {{end}}
 </div>
+
+<script>
+window.addEventListener("keyup", (e) => {
+    if (e.key == "ArrowLeft" && {{.PrevID}}) {
+        window.location.href = "/photos/collection/{{.PrevID}}";
+    }
+    if (e.key == "ArrowRight" && {{.NextID}}) {
+        window.location.href = "/photos/collection/{{.NextID}}";
+    }
+    if (e.key == "Escape") {
+        window.location.href = "/photos";
+    }
+});
+</script>
 {{end}}

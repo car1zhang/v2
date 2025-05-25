@@ -8,22 +8,33 @@
 <h1>Photos by Carl.</h1>
 <p>I use a Canon EOS R50 usually with an RF50mm F1.8 STM lens and edit in darktable and GIMP.</p>
 
-{{range .}}
-<div class="collection">
-    <h2>
-        <a href="/photos/collection/{{.Collection.ID}}">
-            {{.Collection.Title}}
-        </a>
-    </h2>
-    <div class="photo-container">
-        {{range .Photos}}
-        <a href="/photos/photo/{{.ID}}">
-            <div class="photo-box small">
-                <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{.ID}}/thumbnail" alt="{{.Title}}" draggable="false" />
-            </div>
-        </a>
-        {{end}}
+<div class="home-container">
+    {{range $i, $c := .}}
+    <div class="collection">
+        <h3>
+            <a href="/photos/collection/{{$c.Collection.ID}}">
+                {{$c.Collection.Title}}
+            </a>
+        </h3>
+        <div class="photo-grid-3">
+            {{range $j, $p := .Photos}}
+            {{if lt $j 5}}
+            <a href="/photos/collection/{{$c.Collection.ID}}/{{$p.ID}}">
+                <div class="photo-box small">
+                    <img src="https://imagedelivery.net/Jub0u_w-QxWioVt50_O2Ew/{{$p.ID}}/thumbnail" alt="{{$p.Title}}" draggable="false" />
+                </div>
+            </a>
+            {{end}}
+            {{end}}
+            <a href="/photos/collection/{{$c.Collection.ID}}">
+                <div class="photo-box small">
+                    <h3>
+                        {{len .Photos}}
+                    </h3>
+                </div>
+            </a>
+        </div>
     </div>
+    {{end}}
 </div>
-{{end}}
 {{end}}
