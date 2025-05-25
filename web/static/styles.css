@@ -36,7 +36,6 @@ p {
 
 .photo-container {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -47,14 +46,13 @@ p {
     gap: 1rem;
 }
 .photo-grid-7 {
-    display: grid;
-    grid-template-columns: repeat(7, min-content);
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 62rem;
     gap: 1rem;
 }
 
 .photo-box {
-    width: 12rem;
-    height: 12rem;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -74,8 +72,8 @@ p {
     padding: 1rem;
 }
 .photo-box.full {
-    width: 62rem;
-    height: 62rem;
+    width: min(62rem, 100vw - 6rem);
+    height: min(62rem, 100vw - 6rem);
     padding: 2rem;
 }
 .photo-box.disabled {
