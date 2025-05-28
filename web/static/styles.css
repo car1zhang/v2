@@ -105,12 +105,20 @@ a .photo-box:hover {
     a .photo-box:hover {
         background-color: #222;
     }
+}
+
+@media only screen and (max-width: 768px) {
     .photo-box.large {
-        width: 8rem;
-        height: 8rem;
-        padding: 0.5rem;
+    	width: 8rem;
+    	height: 8rem;
+    	padding: 0.5rem;
     }
     .photo-box.full {
-        padding: 0.5rem;
+    	padding: 0.5rem;
+    }
+    .photo-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(2, min-content);
+        gap: 1rem;
     }
 }
