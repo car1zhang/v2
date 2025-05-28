@@ -118,12 +118,12 @@ func photoCollectionPhotoPageHandler(w http.ResponseWriter, r *http.Request) {
         }
     }
 
-    timeString := Photo.Timestamp.Format("2006-01-02 03:04:05")
+    timeString := photoResponse.Photo.Timestamp.Format("2006-01-02 03:04:05")
 
     data := struct { // build this directly into api??
         Photo               Photo
         Collection          Collection
-	TimeString	    string
+        TimeString	        string
         PrevID              string
         NextID              string
         OtherPhotos         []Photo
@@ -131,7 +131,7 @@ func photoCollectionPhotoPageHandler(w http.ResponseWriter, r *http.Request) {
     }{
         Photo: photoResponse.Photo,
         Collection: collectionResponse.Collection,
-	TimeString: timeString,
+        TimeString: timeString,
         PrevID: prevID,
         NextID: nextID,
         OtherPhotos: collectionResponse.Photos,
