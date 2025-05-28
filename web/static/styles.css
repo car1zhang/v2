@@ -105,11 +105,12 @@ a .photo-box:hover {
     a .photo-box:hover {
         background-color: #222;
     }
-    .photo-box {
-        padding: 0.5rem;
-    }
     .photo-box.large {
         width: 8rem;
         height: 8rem;
+        padding: 0.5rem;
+    }
+    .photo-box.full {
+        padding: 0.5rem;
     }
 }
